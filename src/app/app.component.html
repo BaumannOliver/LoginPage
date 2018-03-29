@@ -101,8 +101,8 @@
 		<label for="password">Password</label>
 		<input type="password" id="password" class="password" (focus)="onPasswordFocus($event)" (blur)="onPasswordBlur($event)" />
 	</div>
-	<div class="inputGroup inputGroup3">
-		<button id="login">Log in</button>
+	<div>
+		<input type="button" id="login" (click)="sendToStorage(this.password.value)" value="Log in" />
 	</div>
 </form>
 
