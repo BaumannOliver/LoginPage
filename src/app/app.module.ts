@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { AnimationService } from './service/animation.service';
+import { ToStorageService } from './service/to-storage.service';
 
 
 @NgModule({
@@ -13,7 +13,7 @@ import { AnimationService } from './service/animation.service';
   imports: [
     BrowserModule
   ],
-  providers: [AnimationService],
+  providers: [ToStorageService],
   entryComponents: [],
   bootstrap: [AppComponent]
 })
