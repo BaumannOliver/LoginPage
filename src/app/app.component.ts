@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {TweenMax, Expo, Quad} from 'gsap';
+import { AnimationService } from './service/animation.service';
 
 
 @Component({
@@ -49,6 +50,8 @@ export class AppComponent implements OnInit {
   public outerEarR: any;
   public earHairL: any;
   public earHairR: any;
+
+  constructor(private readonly _animate: AnimationService) {}
 
   ngOnInit() {
 
