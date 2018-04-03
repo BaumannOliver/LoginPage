@@ -8,6 +8,7 @@ import { ToStorageService } from './services/to-storage.service';
 import { AlertComponent } from './components/alert/alert.component';
 import { LoginComponent } from './components/login/login.component';
 import { AlertService } from './services/alert.service';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 
 const appRoutes: Routes = [
@@ -18,7 +19,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     AlertComponent,
-    LoginComponent
+    LoginComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
