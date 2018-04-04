@@ -13,7 +13,7 @@ export class UsersService implements IUsers {
   constructor(private readonly _http: HttpClient) { }
 
   getUser(userName: string): Observable<User> {
-    return this._http.get<User>(`${this._url}/${userName}`);
+    return this._http.get<User>(`${this._url}/?username=${userName}`);
   }
 
   getUsers(): Observable<User[]> {

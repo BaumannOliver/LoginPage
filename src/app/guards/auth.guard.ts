@@ -1,16 +1,34 @@
 import { Injectable } from '@angular/core';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+import { UsersService } from '../services/users.service';
+import { User } from '../models/user';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private readonly _router: Router) {}
+  private LoggedInUser: User[] = [];
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    if (localStorage.getItem('user')) {
-      return true;
-    }
-    this._router.navigate(['/login']);
-    return false;
+  constructor (private readonly route: Router, private readonly _userService: UsersService) {}
+
+  canActivate (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
+    return this._userService.getUsers()
+    .map( users => { 
+      this.LoggedInUser = users.filter(user => user.logged === true);
+      console.log('login users', this.LoggedInUser);
+      if (this.LoggedInUser.length) {
+        return true;
+      } else {
+        this.route.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+      }
+    }).catch(() => {
+      this.route.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+      return Observable.of(false);
+    })
+
   }
 }

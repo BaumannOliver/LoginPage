@@ -13,7 +13,7 @@ import {UsersService} from './services/users.service';
 import {AuthGuard} from './guards/auth.guard';
 import { RegisterComponent } from './components/register/register.component';
 import {HttpClientModule} from '@angular/common/http';
-import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {InMemoryDataService} from "./services/in-memory-data.service";
 
 
@@ -37,8 +37,8 @@ const appRoutes: Routes = [
       appRoutes
     ),
     HttpClientModule,
-    InMemoryWebApiModule.forRoot(
-      InMemoryDataService, {dataEncapsulation: false}
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService
     )
   ],
   providers: [LoginService, AlertService, LoginService, RegisterService, UsersService, AuthGuard],
