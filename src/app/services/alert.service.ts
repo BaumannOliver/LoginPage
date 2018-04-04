@@ -21,13 +21,12 @@ export class AlertService {
     });
    }
 
-   success (message: string, keepAfterNavigationChange = false) {
-    this.keepAfterNavigationChange = keepAfterNavigationChange;
+   public success (message: string) {
     this.subject.next({ type: 'success', text: message });
+    console.log(this.subject);
    }
 
-   error (message: string, keepAfterNavigationChange = false) {
-     this.keepAfterNavigationChange = keepAfterNavigationChange;
+   public error (message: string) {
      this.subject.next({ type: 'error', text: message });
    }
 

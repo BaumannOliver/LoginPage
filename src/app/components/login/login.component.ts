@@ -67,9 +67,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  public sendToStorage(userName: string) {
+  public sendToStorage(userName: string, password: string) {
     console.log('click event', userName);
-    this._login.login(userName);
+    this._login.login(userName, password);
   }
 
   onEmailBlur(e) {

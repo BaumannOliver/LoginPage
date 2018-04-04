@@ -4,6 +4,9 @@ import { environment } from '../../environments/environment';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {User} from '../models/user';
 import {UsersService} from "./users.service";
+import { AlertService } from './alert.service';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 
 @Injectable()
 export class LoginService implements ILogin {
@@ -14,23 +17,29 @@ export class LoginService implements ILogin {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
   };
 
-  constructor(private readonly _http: HttpClient, private readonly _userService: UsersService) {}
+  constructor(private readonly _http: HttpClient, private readonly _userService: UsersService,
+    private readonly _alertService: AlertService, private readonly _router: Router) {}
 
-  login(userName: string) {
+  login(userName: string, password: string) {
     this._userService.getUser(userName)
       .subscribe(
         user => {
           this.userToLogIn = user;
-          console.log('user from api', this.userToLogIn);
-          this.userToLogIn.logged = true;
-          },
+          if (this.userToLogIn[0].password !== password) {
+            this._alertService.error('Username or Password wrong');
+          } else {
+            this.userToLogIn[0].logged = true;
+            this._http.put(this._url, this.userToLogIn[0], this.httpOptions).subscribe( () => {
+              this._alertService.success('User logged in');
+              this._router.navigate(['']);
+            })
+          }
+          
+        },
         err => {
+          this._alertService.error('User unkwon');
           console.log(err);
-          },
-        () => {
-          localStorage.setItem('user', userName);
-          return this._http.put(this._url, this.userToLogIn, this.httpOptions);
-        });
+        })
   }
 
   logout(userName: string) {
