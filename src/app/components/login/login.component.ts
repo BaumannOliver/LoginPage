@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import {TweenMax, Expo, Quad} from 'gsap';
-import { ToStorageService } from '../../services/to-storage.service';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
   public earHairL: any;
   public earHairR: any;
 
-  constructor(private readonly _localeStorage: ToStorageService) {}
+  constructor(private readonly _login: LoginService) {}
 
   ngOnInit() {
 
@@ -67,16 +67,9 @@ export class LoginComponent implements OnInit {
 
   }
 
-  public sendToStorage(pw) {
-    console.log('click event', pw);
-    if (!this._localeStorage.isKeyPassword()) {
-      console.log('es steht nichts im Locale Storage');
-      this._localeStorage.writeToLocaleStorage(pw);
-    } else if (this._localeStorage.getFromLocaleStorage() === pw) {
-      alert('Erfolg')
-    } else {
-      alert('Falsches Password')
-    }
+  public sendToStorage(userName: string) {
+    console.log('click event', userName);
+    this._login.login(userName);
   }
 
   onEmailBlur(e) {
